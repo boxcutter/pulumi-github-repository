@@ -739,7 +739,7 @@ $ docker container run -it --rm \
 
 1. Add the PULUMI_ACCESS_TOKEN created earlier as a per-repository secret named `PULUMI_ACCESS_TOKEN`. This needs to be available to workflows in order to run pulumi non-interactively and so that the cli tool can communicate with the Pulumi service on your behalf.
 
-1. Generate the CI/CD secret used to manage all the other repositories in the GitHub organization. Generate GitHub personal access token under the boxcutter account with `admin:org` and `repo` permissions. Save in 1Password in the notes for the boxcutter account ([1Password link](https://start.1password.com/open/i?a=ZCJFQ3OBFNBPZNZ4NB27WUYUBM&v=gt6zmthhtppympnyshkzmm26dq&i=utvu7uhmdoz33l4ap6uvjri3ei&h=sinagub.1password.com) )
+1. Generate the CI/CD secret used to manage all the other repositories in the GitHub organization. Generate GitHub personal access token under the boxcutter account with `read:org` and `repo` permissions. Save in 1Password in the notes for the boxcutter account ([1Password link](https://start.1password.com/open/i?a=ZCJFQ3OBFNBPZNZ4NB27WUYUBM&v=gt6zmthhtppympnyshkzmm26dq&i=utvu7uhmdoz33l4ap6uvjri3ei&h=sinagub.1password.com) ).
 
 1. Configure the CI/CD secret. Add GitHub personal access token to the Pulumi stack
 
@@ -830,9 +830,8 @@ $ docker container run -it --rm \
 1. Make sure the following teams exist. These are used in assigning default permissions each repository:
      - amazing-bot
      - bot
-     - corporate
-     - engineering
-     - infrastructure
+     - contributor
+     - maintainer
 
    Once the teams exist you'll need to add the team ids as config settings. You'll need to first dump the teams ids by running the following GitHub API command:
 
