@@ -5,7 +5,7 @@ from boxcutter.scm.github import GitHubRepository, GitHubRepositoryArgs
 GitHubRepository(
     "bsd",
     GitHubRepositoryArgs(
-        description = "Virtual machine templates for BSD flavours written in legacy JSON",
+        description="Virtual machine templates for BSD flavours written in legacy JSON",
     ),
 )
 GitHubRepository(
@@ -47,7 +47,7 @@ GitHubRepository(
 GitHubRepository(
     "oci",
     GitHubRepositoryArgs(
-        description = "Open container images",
+        description="Open container images",
     ),
 )
 GitHubRepository(

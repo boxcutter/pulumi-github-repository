@@ -16,50 +16,23 @@ Pulumi automation code that manages the repositories in this GitHub organization
 
 ## Adding a new engineering team repo
 
-Engineering team repositories are read/write for the engineering team, read-only for other teams.
-In `engineering_repositories.py` add a new entry to the `engineering_repositories` dictionary
+In `__main__.py` add a new entry for the repository
 in the following format - __maintain alphabetical ordering__!
 ```
-engineering_repositories = {
-    ....
-    "<new_repo_name>": {
-        "description": "<repo_description>"
-    },
-}
+GitHubRepository(
+    "<new_repo_name>",
+    GitHubRepositoryArgs(
+        description="<repo_description",
+    ),
+)
 
 Example:
-engineering_repositories = {
-    ....
-    "shiny": {
-        "description": "A very shiny source code base"
-    },
-}
-```
-
-You can specify one special parameter, `farmonacci_access: True` for repos that need to be
-accessed on the farmonacci test robot environment. Farmonacci 1.0 is not currently managed
-through automation, so we're currently using a temporary bot credential plus an ssh key
-for catkin to ensure read-only access in this environment. This setting should be
-deprecated with Farmonacci 2.0 (and for any other robot environments, as we're not going
-to set up any other environments by hand).
-
-```
-engineering_repositories = {
-    ....
-    "<new_repo_name>": {
-        "description": "<repo_description>",
-        "farmonacci_access": True,
-    },
-}
-
-Example:
-engineering_repositories = {
-    ....
-    "shiny_farmonacci": {
-        "description": "A very shiny source code base that can be accessed on farmonacci",
-        "farmonacci_access": True,
-    },
-}
+GitHubRepository(
+    "shiny",
+    GitHubRepositoryArgs(
+        description="A very shiny source code base",
+    ),
+)
 ```
 
 # Renaming an existing repo
@@ -93,7 +66,7 @@ View Live: https://app.pulumi.com/beavertails/pulumi-source-repository-dev/dev/p
 
      Type                              Name                                Plan
      pulumi:pulumi:Stack               pulumi-source-repository-dev-dev
-     └─ polymath:scm:GitHubRepository  caladan_examples
+     └─ boxcutter:scm:GitHubRepository caladan_examples
  ~      └─ github:index:Repository     caladan_examples-github-repository
 
 Resources:
@@ -109,7 +82,7 @@ View Live: https://app.pulumi.com/beavertails/pulumi-source-repository-dev/dev/p
     [urn=urn:pulumi:dev::pulumi-source-repository-dev::pulumi:pulumi:Stack::pulumi-source-repository-dev-dev]
         ~ github:index/repository:Repository: (update) 🔒
             [id=caladan_examples]
-            [urn=urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/repository:Repository::caladan_examples-github-repository]
+            [urn=urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/repository:Repository::caladan_examples-github-repository]
             [provider=urn:pulumi:dev::pulumi-source-repository-dev::pulumi:providers:github::default_5_0_0::e6869289-675d-4f56-84ea-d0a2689d733c]
           ~ name: "caladan_examples" => "caladan_examples_renamed"
 Resources:
@@ -122,7 +95,7 @@ View Live: https://app.pulumi.com/beavertails/pulumi-source-repository-dev/dev/p
 
      Type                              Name                                Plan
      pulumi:pulumi:Stack               pulumi-source-repository-dev-dev
-     └─ polymath:scm:GitHubRepository  caladan_examples
+     └─ boxcutter:scm:GitHubRepository caladan_examples
  ~      └─ github:index:Repository     caladan_examples-github-repository
 
 Resources:
@@ -138,7 +111,7 @@ View Live: https://app.pulumi.com/beavertails/pulumi-source-repository-dev/dev/u
 
      Type                              Name                                Stat
      pulumi:pulumi:Stack               pulumi-source-repository-dev-dev
-     └─ polymath:scm:GitHubRepository  caladan_examples
+     └─ boxcutter:scm:GitHubRepository caladan_examples
  ~      └─ github:index:Repository     caladan_examples-github-repository
 
 Resources:
@@ -205,7 +178,7 @@ Here's an example of the source code changes for a repo named
 `example` that also has branch protection configured:
 
 ```
-from polymath.scm.github import GitHubRepository, GitHubRepositoryArgs
+from boxcutter.scm.github import GitHubRepository, GitHubRepositoryArgs
 
 GitHubRepository(
     "caladan_examples",
@@ -239,7 +212,7 @@ View Live: https://app.pulumi.com/beavertails/pulumi-source-repository-dev/dev/p
 
      Type                                 Name
      pulumi:pulumi:Stack                  pulumi-source-repository-dev-dev
- +   └─ polymath:scm:GitHubRepository     caladan_examples
+ +   └─ boxcutter:scm:GitHubRepository    caladan_examples
  =      ├─ github:index:Repository        caladan_examples-github-repositor
  +      ├─ github:index:TeamRepository    caladan_examples-amazing-bot-gith
  +      ├─ github:index:TeamRepository    caladan_examples-infrastructure-g
@@ -263,12 +236,12 @@ View Live: https://app.pulumi.com/beavertails/pulumi-source-repository-dev/dev/p
 
   pulumi:pulumi:Stack: (same)
     [urn=urn:pulumi:dev::pulumi-source-repository-dev::pulumi:pulumi:Stack::pulumi-source-repository-dev-dev]
-    + polymath:scm:GitHubRepository: (create)
-        [urn=urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository::caladan_examples]
+    + boxcutter:scm:GitHubRepository: (create)
+        [urn=urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository::caladan_examples]
 warning: inputs to import do not match the existing resource; importing this resource will fail
         = github:index/repository:Repository: (import) 🔒
             [id=caladan_examples]
-            [urn=urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/repository:Repository::caladan_examples-github-repository]
+            [urn=urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/repository:Repository::caladan_examples-github-repository]
             [provider=urn:pulumi:dev::pulumi-source-repository-dev::pulumi:providers:github::default_5_0_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9]
           ~ allowMergeCommit   : true => false
           ~ allowRebaseMerge   : true => false
@@ -279,30 +252,30 @@ warning: inputs to import do not match the existing resource; importing this res
           ~ hasWiki            : false => true
           + licenseTemplate    : "apache-2.0"
         + github:index/teamRepository:TeamRepository: (create)
-            [urn=urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/teamRepository:TeamRepository::caladan_examples-amazing-bot-github-team-repository]
+            [urn=urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/teamRepository:TeamRepository::caladan_examples-amazing-bot-github-team-repository]
             [provider=urn:pulumi:dev::pulumi-source-repository-dev::pulumi:providers:github::default_5_0_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9]
             permission: "admin"
             repository: "caladan_examples"
             teamId    : "6366570"
         + github:index/teamRepository:TeamRepository: (create)
-            [urn=urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/teamRepository:TeamRepository::caladan_examples-engineering-github-team-repository]
+            [urn=urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/teamRepository:TeamRepository::caladan_examples-engineering-github-team-repository]
             [provider=urn:pulumi:dev::pulumi-source-repository-dev::pulumi:providers:github::default_5_0_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9]
             permission: "push"
             repository: "caladan_examples"
             teamId    : "6367064"
         + github:index/branchDefault:BranchDefault: (create)
-            [urn=urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/branchDefault:BranchDefault::caladan_examples-github-branch-default]
+            [urn=urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/branchDefault:BranchDefault::caladan_examples-github-branch-default]
             [provider=urn:pulumi:dev::pulumi-source-repository-dev::pulumi:providers:github::default_5_0_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9]
             branch    : "main"
             repository: "caladan_examples"
         + github:index/teamRepository:TeamRepository: (create)
-            [urn=urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/teamRepository:TeamRepository::caladan_examples-infrastructure-github-team-repository]
+            [urn=urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/teamRepository:TeamRepository::caladan_examples-infrastructure-github-team-repository]
             [provider=urn:pulumi:dev::pulumi-source-repository-dev::pulumi:providers:github::default_5_0_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9]
             permission: "push"
             repository: "caladan_examples"
             teamId    : "6367065"
         + github:index/actionsSecret:ActionsSecret: (create)
-            [urn=urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/actionsSecret:ActionsSecret::caladan_examples-ssh-private-key-github-actions-secret]
+            [urn=urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/actionsSecret:ActionsSecret::caladan_examples-ssh-private-key-github-actions-secret]
             [provider=urn:pulumi:dev::pulumi-source-repository-dev::pulumi:providers:github::default_5_0_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9]
             plaintextValue: "superseekret"
             repository    : "caladan_examples"
@@ -310,7 +283,7 @@ warning: inputs to import do not match the existing resource; importing this res
 warning: inputs to import do not match the existing resource; importing this resource will fail
         = github:index/branchProtection:BranchProtection: (import) 🔒
             [id=BPR_kwDOIKLQb84BxXH7]
-            [urn=urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/branchProtection:BranchProtection::caladan_examples-github-branch-protection]
+            [urn=urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/branchProtection:BranchProtection::caladan_examples-github-branch-protection]
             [provider=urn:pulumi:dev::pulumi-source-repository-dev::pulumi:providers:github::default_5_0_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9]
           ~ repositoryId: "R_kgDOIKLQbw" => "caladan_examples"
 Resources:
@@ -322,7 +295,7 @@ Resources:
 Add attributes as needed to match the values displayed in the diff. These are all the input
 values for the pulumi GitHub provider Repository object: https://www.pulumi.com/registry/packages/github/api-docs/repository/
 ```
-from polymath.scm.github import GitHubRepository, GitHubRepositoryArgs
+from boxcutter.scm.github import GitHubRepository, GitHubRepositoryArgs
 
 GitHubRepository(
     "caladan_examples",
@@ -355,7 +328,7 @@ View Live: https://app.pulumi.com/beavertails/pulumi-source-repository-dev/dev/p
 
      Type                                 Name
      pulumi:pulumi:Stack                  pulumi-source-repository-dev-dev
- +   └─ polymath:scm:GitHubRepository     caladan_examples
+ +   └─ boxcutter:scm:GitHubRepository    caladan_examples
  =      ├─ github:index:Repository        caladan_examples-github-repositor
  +      ├─ github:index:TeamRepository    caladan_examples-amazing-bot-gith
  +      ├─ github:index:TeamRepository    caladan_examples-engineering-gith
@@ -376,7 +349,7 @@ View Live: https://app.pulumi.com/beavertails/pulumi-source-repository-dev/dev/p
 
      Type                                 Name
      pulumi:pulumi:Stack                  pulumi-source-repository-dev-dev
- +   └─ polymath:scm:GitHubRepository     caladan_examples
+ +   └─ boxcutter:scm:GitHubRepository    caladan_examples
  =      ├─ github:index:Repository        caladan_examples-github-repositor
  +      ├─ github:index:TeamRepository    caladan_examples-amazing-bot-gith
  +      ├─ github:index:TeamRepository    caladan_examples-engineering-gith
@@ -399,7 +372,7 @@ View Live: https://app.pulumi.com/beavertails/pulumi-source-repository-dev/dev/u
 
      Type                                 Name
      pulumi:pulumi:Stack                  pulumi-source-repository-dev-dev
- +   └─ polymath:scm:GitHubRepository     caladan_examples
+ +   └─ boxcutter:scm:GitHubRepository    caladan_examples
  =      ├─ github:index:Repository        caladan_examples-github-repositor
  +      ├─ github:index:TeamRepository    caladan_examples-amazing-bot-gith
  +      ├─ github:index:TeamRepository    caladan_examples-engineering-gith
@@ -472,7 +445,7 @@ Next you can start transitioning the repo to the standard inputs by deleting all
 just added in the previous step. If you imported branch protection, the `repository_id` must
 remain:
 ```
-from polymath.scm.github import GitHubRepository, GitHubRepositoryArgs
+from boxcutter.scm.github import GitHubRepository, GitHubRepositoryArgs
 
 GitHubRepository(
     "caladan_examples",
@@ -504,7 +477,7 @@ View Live: https://app.pulumi.com/beavertails/pulumi-source-repository-dev/dev/p
 
      Type                              Name                                Plan
      pulumi:pulumi:Stack               pulumi-source-repository-dev-dev
-     └─ polymath:scm:GitHubRepository  caladan_examples
+     └─ boxcutter:scm:GitHubRepository caladan_examples
  ~      └─ github:index:Repository     caladan_examples-github-repository
 
 Resources:
@@ -522,7 +495,7 @@ View Live: https://app.pulumi.com/beavertails/pulumi-source-repository-dev/dev/p
     [urn=urn:pulumi:dev::pulumi-source-repository-dev::pulumi:pulumi:Stack::pulumi-source-repository-dev-dev]
         ~ github:index/repository:Repository: (update) 🔒
             [id=caladan_examples]
-            [urn=urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/repository:Repository::caladan_examples-github-repository]
+            [urn=urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/repository:Repository::caladan_examples-github-repository]
             [provider=urn:pulumi:dev::pulumi-source-repository-dev::pulumi:providers:github::default_5_0_0::e6869289-675d-4f56-84ea-d0a2689d733c]
           ~ allowMergeCommit   : true => false
           ~ allowRebaseMerge   : true => false
@@ -543,7 +516,7 @@ View Live: https://app.pulumi.com/beavertails/pulumi-source-repository-dev/dev/p
 
      Type                              Name                                Plan
      pulumi:pulumi:Stack               pulumi-source-repository-dev-dev
-     └─ polymath:scm:GitHubRepository  caladan_examples
+     └─ boxcutter:scm:GitHubRepository caladan_examples
  ~      └─ github:index:Repository     caladan_examples-github-repository
 
 Resources:
@@ -559,7 +532,7 @@ View Live: https://app.pulumi.com/beavertails/pulumi-source-repository-dev/dev/u
 
      Type                              Name                                Stat
      pulumi:pulumi:Stack               pulumi-source-repository-dev-dev
-     └─ polymath:scm:GitHubRepository  caladan_examples
+     └─ boxcutter:scm:GitHubRepository caladan_examples
  ~      └─ github:index:Repository     caladan_examples-github-repository
 
 Resources:
@@ -622,51 +595,51 @@ $ docker container run -it --rm \
 % pulumi state delete <resource URN>
 
 % 
-├─ polymath:scm:GitHubRepository                      caladan_examples
-    │  │  URN: urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository::caladan_examples
+├─ boxcutter:scm:GitHubRepository                      caladan_examples
+    │  │  URN: urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository::caladan_examples
     │  ├─ github:index/repository:Repository              caladan_examples-github-repository
-    │  │     URN: urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/repository:Repository::caladan_examples-github-repository
+    │  │     URN: urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/repository:Repository::caladan_examples-github-repository
     │  ├─ github:index/teamRepository:TeamRepository      caladan_examples-amazing-bot-github-team-repository
-    │  │     URN: urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/teamRepository:TeamRepository::caladan_examples-amazing-bot-github-team-repository
+    │  │     URN: urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/teamRepository:TeamRepository::caladan_examples-amazing-bot-github-team-repository
     │  ├─ github:index/teamRepository:TeamRepository      caladan_examples-engineering-github-team-repository
-    │  │     URN: urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/teamRepository:TeamRepository::caladan_examples-engineering-github-team-repository
+    │  │     URN: urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/teamRepository:TeamRepository::caladan_examples-engineering-github-team-repository
     │  ├─ github:index/teamRepository:TeamRepository      caladan_examples-infrastructure-github-team-repository
-    │  │     URN: urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/teamRepository:TeamRepository::caladan_examples-infrastructure-github-team-repository
+    │  │     URN: urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/teamRepository:TeamRepository::caladan_examples-infrastructure-github-team-repository
     │  ├─ github:index/branchDefault:BranchDefault        caladan_examples-github-branch-default
-    │  │     URN: urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/branchDefault:BranchDefault::caladan_examples-github-branch-default
+    │  │     URN: urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/branchDefault:BranchDefault::caladan_examples-github-branch-default
     │  ├─ github:index/actionsSecret:ActionsSecret        caladan_examples-ssh-private-key-github-actions-secret
-    │  │     URN: urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/actionsSecret:ActionsSecret::caladan_examples-ssh-private-key-github-actions-secret
+    │  │     URN: urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/actionsSecret:ActionsSecret::caladan_examples-ssh-private-key-github-actions-secret
     │  └─ github:index/branchProtection:BranchProtection  caladan_examples-github-branch-protection
 
 
-# pulumi state delete 'urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/actionsSecret:ActionsSecret::caladan_examples-ssh-private-key-github-actions-secret'
+# pulumi state delete 'urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/actionsSecret:ActionsSecret::caladan_examples-ssh-private-key-github-actions-secret'
  warning: This command will edit your stack's state directly. Confirm? Yes
 Resource deleted
 
-# pulumi state delete 'urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/branchDefault:BranchDefault::caladan_examples-github-branch-default'
+# pulumi state delete 'urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/branchDefault:BranchDefault::caladan_examples-github-branch-default'
  warning: This command will edit your stack's state directly. Confirm? Yes
 Resource deleted
 
-# pulumi state delete -y 'urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/teamRepository:TeamRepository::caladan_examples-infrastructure-github-team-repository'
+# pulumi state delete -y 'urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/teamRepository:TeamRepository::caladan_examples-infrastructure-github-team-repository'
 Resource deleted
 
-# pulumi state delete -y 'urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/teamRepository:TeamRepository::caladan_examples-engineering-github-team-repository'
+# pulumi state delete -y 'urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/teamRepository:TeamRepository::caladan_examples-engineering-github-team-repository'
 Resource deleted
 
-# pulumi state delete -y 'urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/teamRepository:TeamRepository::caladan_examples-amazing-bot-github-team-repository'
+# pulumi state delete -y 'urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/teamRepository:TeamRepository::caladan_examples-amazing-bot-github-team-repository'
 Resource deleted
 
-# pulumi state delete -y 'urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/branchProtection:BranchProtection::caladan_examples-github-branch-protection'
+# pulumi state delete -y 'urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/branchProtection:BranchProtection::caladan_examples-github-branch-protection'
 Resource delete
 
-# pulumi state delete -y 'urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/repository:Repository::caladan_examples-github-repository'
+# pulumi state delete -y 'urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/repository:Repository::caladan_examples-github-repository'
 warning: A new version of Pulumi is available. To upgrade from version '3.41.1' to '3.42.0', visit https://pulumi.com/docs/reference/install/ for manual instructions and release notes.
 error: This resource can't be safely deleted because it is protected. Re-run this command with --force to force deletion
-root@f19a97a6c215:/app# pulumi state delete -y --force 'urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository$github:index/repository:Repository::caladan_examples-github-repository'
+root@f19a97a6c215:/app# pulumi state delete -y --force 'urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository$github:index/repository:Repository::caladan_examples-github-repository'
 warning: deleting protected resource due to presence of --force
 Resource deleted
 
-# pulumi state delete -y 'urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository::caladan_examples'
+# pulumi state delete -y 'urn:pulumi:dev::pulumi-source-repository-dev::boxcutter:scm:GitHubRepository::caladan_examples'
  warning: This command will edit your stack's state directly.
 Resource deleted
 ```
