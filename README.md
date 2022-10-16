@@ -84,8 +84,8 @@ GitHubRepository(
     --workdir /app \
     --mount type=bind,source="$(pwd)",target=/app \
     --entrypoint bash \
-    docker.io/polymathrobotics/pulumi-python
-% pulumi stack select dev
+    docker.io/boxcutter/pulumi-python
+% pulumi stack select org
 % pulumi preview
 Previewing update (dev)
 
