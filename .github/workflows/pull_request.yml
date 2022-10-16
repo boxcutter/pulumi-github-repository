@@ -1,8 +1,8 @@
 name: Pull request
 on:
-  - pull_request:
-      paths:
-        - '*'
+  pull_request:
+    paths:
+      - '*'
 defaults:
   run:
     working-directory: "."        
