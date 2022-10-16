@@ -1,7 +1,5 @@
 """A Python Pulumi program"""
 
-import pulumi
-
 from boxcutter.scm.github import GitHubRepository, GitHubRepositoryArgs
 
 GitHubRepository(
