@@ -5,13 +5,13 @@ from boxcutter.scm.github import GitHubRepository, GitHubRepositoryArgs
 GitHubRepository(
     "sles",
     GitHubRepositoryArgs(
-        description = "SUSE Linux Enterprise Server templates written in legacy JSON",
+        description="SUSE Linux Enterprise Server templates written in legacy JSON",
     ),
 )
 GitHubRepository(
     "windows-ps",
     GitHubRepositoryArgs(
-        description = "Experimental Windows templates written in legacy JSON based on PowerShell scripts",
+        description="Experimental Windows templates written in legacy JSON based on PowerShell scripts",
     ),
 )
 
