@@ -172,6 +172,14 @@ $ docker run --rm \
     boxcutter/black .
 ```
 
+# Lint code locally with flake8
+
+```
+$ docker run --rm \
+    --mount type=bind,source="$(pwd)",target=/code \
+    boxcutter/flake8 *.py
+```
+
 # Importing an existing repo
 
 Because we're using component resources that do not provide the ability to customize the import
