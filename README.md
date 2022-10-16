@@ -164,16 +164,24 @@ repository, then follow the procedure to import an existing repo. Unfortunately 
 using aliases to reparent/rename don't work with the terraform provider this support is based
 on.
 
+# Reformat code locally with black
+
+```
+$ docker run --rm \
+    --mount type=bind,source="$(pwd)",target=/code \
+    boxcutter/black .
+```
+
 # Importing an existing repo
 
 Because we're using component resources that do not provide the ability to customize the import
 workflow, you must adopt existing GitHub repositories via code, and not with "pulumi import".
 
-It's probably easier to get the `#infra` team to do this for you. You'll need to do some
+You'll need to do some
 interactive pulumi commands to import existing repositories, as in addition to performing
 an import, normally the repo will need to be transition to have a standard repo setup as well.
 
-Start by adding a reference to the repository with a name, description, and a repoistory_import
+Start by adding a reference to the repository with a name, description, and a repository_import
 attribute. The `repository_import` attribute maps to the `import_` resource option. For more
 information refer to https://www.pulumi.com/docs/guides/adopting/import/ Don't bother
 adding it to one of the standard repo dictionaries just yet. Just add the reference to the end
@@ -186,7 +194,7 @@ in a subsequent diff. You'll need to perform both the repository and branch prot
 at the same time. The import won't work properly if you try to do them separately.
 
 Here's an example of the source code changes for a repo named
-`caladan_examples` that also has branch protection configured:
+`example` that also has branch protection configured:
 
 ```
 from polymath.scm.github import GitHubRepository, GitHubRepositoryArgs
@@ -195,7 +203,9 @@ GitHubRepository(
     "caladan_examples",
     GitHubRepositoryArgs(
         description="See your robot moving autonomously in simulation - today!",
+        # This maps to _import
         repository_import="caladan_examples",
+        # This maps to _import
         branch_protection_import="caladan_examples:main",
         branch_protection_pattern="main",
         branch_protection_repository_id='caladan_examples',
@@ -207,6 +217,13 @@ In most cases, you'll get a warning that the inputs do not match the existing re
 when you run `pulumi preview`. To get more detail on which inputs differ, run 
 `pulumi preview --diff`
 ```
+$ docker container run -it --rm \
+        --env PULUMI_ACCESS_TOKEN \
+        --workdir /app \
+        --mount type=bind,source="$(pwd)",target=/app \
+        --entrypoint bash \
+          docker.io/boxcutter/pulumi-python
+% pulumi stack select org
 % pulumi preview
 Previewing update (dev)
 
@@ -576,6 +593,21 @@ issues with our custom component.
 # pulumi import github:index/teamRepository:TeamRepository truck_sim_repository_bot_team_repository 5594482:truck_sim
 ```
 
+# Setting up the python virtual environment
+
+```
+$ docker container run -it --rm \
+        --env PULUMI_ACCESS_TOKEN \
+        --workdir /app \
+        --mount type=bind,source="$(pwd)",target=/app \
+        --entrypoint bash \
+          docker.io/boxcutter/pulumi-python
+# python3 -m venv venv  
+# venv/bin/pip install -r requirements.txt
+# python3 -m pip install --upgrade pip
+# pulumi stack select org
+```
+
 ## Manually deleting state:
 ```
 % pulumi stack --show-urns
@@ -629,75 +661,6 @@ Resource deleted
 # pulumi state delete -y 'urn:pulumi:dev::pulumi-source-repository-dev::polymath:scm:GitHubRepository::caladan_examples'
  warning: This command will edit your stack's state directly.
 Resource deleted
-```
-
-
-
-
-
-# Using pulumi
-
-## Reformat code locally with black
-
-```bash
-docker run --rm \
-  --mount type=bind,source="$(pwd)",target=/code \
-  docker.io/polymathrobotics/black .
-```
-
-## Working locally
-
-```bash
-$ docker container run -it --rm \
-    --env PULUMI_ACCESS_TOKEN \
-    --workdir /app \
-    --mount type=bind,source="$(pwd)",target=/app \
-    --entrypoint bash \
-    docker.io/polymathrobotics/pulumi-python
-# python3 -m venv venv  
-# venv/bin/pip install -r requirements.txt
-# python3 -m pip install --upgrade pip
-# pulumi stack select dev
-# <enter in pulumi commands here>
-```
-
-## Importing an existing repo
-
-```
-$ docker container run -it --rm \
-    --env PULUMI_ACCESS_TOKEN \
-    --workdir /app \
-    --mount type=bind,source="$(pwd)",target=/app \
-    --entrypoint bash \
-    docker.io/polymathrobotics/pulumi-python
-# pulumi stack select dev
-# pulumi import github:index/repository:Repository import_repository import
-```
-
-You'll get a diagnostic that says `default_branch` is deprecated:
-```
-Diagnostics:
-  github:index:Repository (import_repository):
-    warning: urn:pulumi:dev::pulumi-github-repository-dev::github:index/repository:Repository::import_repository verification warning: "default_branch": [DEPRECATED] Use the github_branch_default resource instead
-```
-
-## Renaming a project/stack
-
-```
-$ docker container run -it --rm \
-    --env PULUMI_ACCESS_TOKEN \
-    --workdir /app \
-    --mount type=bind,source="$(pwd)",target=/app \
-    --entrypoint bash \
-    docker.io/polymathrobotics/pulumi-python
-% pulumi stack select dev
-# To rename a stack
-% pulumi stack rename <new-stack-name>
-# To rename a stack and the project
-% pulumi stack rename <fully-qualified-stack-name>
-% pulumi stack rename beavertails/new-project-name/production
-% pulumi stack rename beavertails/pulumi-source-repository-dev/dev
-# Change name of project in Pulumi.yaml
 ```
 
 # Setup
