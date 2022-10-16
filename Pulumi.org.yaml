@@ -1,4 +1,8 @@
 config:
+  boxcutter:amazing_bot_team_id: "6809378"
+  boxcutter:bot_team_id: "6809380"
+  boxcutter:contributor_team_id: "6809383"
+  boxcutter:maintainer_team_id: "6809382"
   github:owner: boxcutter
   github:token:
     secure: AAABAKDyiWjtTr6f60eFR0H0FU4yw2vODYdEX/xUMIn86spQA4KOaEdIKEnOnJ/NNL4utf1wkEOjVMBT1gnk3BEiptFOAfAl

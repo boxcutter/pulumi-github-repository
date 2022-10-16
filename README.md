@@ -841,87 +841,8 @@ $ docker container run -it --rm \
      curl \
        -H "Accept: application/vnd.github+json" \
        -H "Authorization: Bearer ${GITHUB_API_TOKEN}" \
-       https://api.github.com/orgs/polymath-robotics/teams
+       https://api.github.com/orgs/boxcutter/teams
      ```
- 
-     ```
-     % curl \
-      -H "Accept: application/vnd.github+json" \
-      -H "Authorization: Bearer ${GITHUB_API_TOKEN}" \
-       https://api.github.com/orgs/polymath-robotics/teams
-    [
-      {
-        "name": "amazing-bot",
-        "id": 6366570,
-        "node_id": "T_kwDOBbunSc4AYSVq",
-        "slug": "amazing-bot",
-        "description": "Bots with superpowers",
-        "privacy": "closed",
-        "url": "https://api.github.com/organizations/96184137/team/6366570",
-        "html_url": "https://github.com/orgs/polymath-robotics/teams/amazing-bot",
-        "members_url": "https://api.github.com/organizations/96184137/team/6366570/members{/member}",
-        "repositories_url": "https://api.github.com/organizations/96184137/team/6366570/repos",
-        "permission": "pull",
-        "parent": null
-      },
-      {
-        "name": "bot",
-        "id": 6366600,
-        "node_id": "T_kwDOBbunSc4AYSWI",
-        "slug": "bot",
-        "description": "Bots accounts",
-        "privacy": "closed",
-        "url": "https://api.github.com/organizations/96184137/team/6366600",
-        "html_url": "https://github.com/orgs/polymath-robotics/teams/bot",
-        "members_url": "https://api.github.com/organizations/96184137/team/6366600/members{/member}",
-        "repositories_url": "https://api.github.com/organizations/96184137/team/6366600/repos",
-        "permission": "pull",
-        "parent": null
-      },
-      {
-        "name": "corporate",
-        "id": 6367063,
-        "node_id": "T_kwDOBbunSc4AYSdX",
-        "slug": "corporate",
-        "description": "The suits $$$",
-        "privacy": "closed",
-        "url": "https://api.github.com/organizations/96184137/team/6367063",
-        "html_url": "https://github.com/orgs/polymath-robotics/teams/corporate",
-        "members_url": "https://api.github.com/organizations/96184137/team/6367063/members{/member}",
-        "repositories_url": "https://api.github.com/organizations/96184137/team/6367063/repos",
-        "permission": "pull",
-        "parent": null
-      },
-      {
-        "name": "engineering",
-        "id": 6367064,
-        "node_id": "T_kwDOBbunSc4AYSdY",
-        "slug": "engineering",
-        "description": "Engineering Humans",
-        "privacy": "closed",
-        "url": "https://api.github.com/organizations/96184137/team/6367064",
-        "html_url": "https://github.com/orgs/polymath-robotics/teams/engineering",
-        "members_url": "https://api.github.com/organizations/96184137/team/6367064/members{/member}",
-        "repositories_url": "https://api.github.com/organizations/96184137/team/6367064/repos",
-        "permission": "pull",
-        "parent": null
-      },
-      {
-        "name": "infrastructure",
-        "id": 6367065,
-        "node_id": "T_kwDOBbunSc4AYSdZ",
-        "slug": "infrastructure",
-        "description": "Humans who manage the infrastructure",
-        "privacy": "closed",
-        "url": "https://api.github.com/organizations/96184137/team/6367065",
-        "html_url": "https://github.com/orgs/polymath-robotics/teams/infrastructure",
-        "members_url": "https://api.github.com/organizations/96184137/team/6367065/members{/member}",
-        "repositories_url": "https://api.github.com/organizations/96184137/team/6367065/repos",
-        "permission": "pull",
-        "parent": null
-      }
-    ]
-    ``` 
 
     Once you have all the team IDs, create config entries for each similar to the following:
 
@@ -931,11 +852,10 @@ $ docker container run -it --rm \
         --workdir /app \
         --mount type=bind,source="$(pwd)",target=/app \
         --entrypoint bash \
-          docker.io/polymathrobotics/pulumi-python
-    # pulumi stack select dev
-    # pulumi config set polymath:infrastructure_team_id 6367065
-    # pulumi config set polymath:engineering_team_id 6367064
-    # pulumi config set polymath:corporate_team_id 6367063
-    # pulumi config set polymath:bot_team_id 6366600
-    # pulumi config set polymath:amazing_bot_team_id 6366570
+          docker.io/boxcutter/pulumi-python
+    # pulumi stack select org
+    # pulumi config set boxcutter:amazing_bot_team_id 6809378
+    # pulumi config set boxcutter:bot_team_id 6809380
+    # pulumi config set boxcutter:contributor_team_id 6809383
+    # pulumi config set boxcutter:maintainer_team_id 6809382
     ```
