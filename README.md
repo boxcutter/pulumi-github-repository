@@ -142,7 +142,7 @@ on.
 ```
 $ docker run --rm \
     --mount type=bind,source="$(pwd)",target=/code \
-    boxcutter/black .
+    docker.io/boxcutter/black .
 ```
 
 # Lint code locally with flake8
@@ -150,7 +150,7 @@ $ docker run --rm \
 ```
 $ docker run --rm \
     --mount type=bind,source="$(pwd)",target=/code \
-    boxcutter/flake8 *.py
+    dockeer.io/boxcutter/flake8 *.py
 ```
 
 # Importing an existing repo
