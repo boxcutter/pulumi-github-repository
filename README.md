@@ -14,10 +14,9 @@ Pulumi automation code that manages the repositories in this GitHub organization
 6. If approved, go to step 7. If changes requested, go to step 3.
 7. Follow instructions on merging PRs below (`gh pr merge`)
 
-## Adding a new engineering team repo
+## Adding a new team repo
 
-In `__main__.py` add a new entry for the repository
-in the following format - __maintain alphabetical ordering__!
+Add a new entry for the repositor in `__main__.py` using the following format - __maintain alphabetical ordering__!
 ```
 GitHubRepository(
     "<new_repo_name>",
