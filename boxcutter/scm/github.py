@@ -92,7 +92,7 @@ class GitHubRepository(pulumi.ComponentResource):
         config = pulumi.Config("boxcutter")
 
         amazing_bot_team_id = config.require("amazing_bot_team_id")
-        bot_team_id = config.require("amazing_bot_team_id")
+        bot_team_id = config.require("bot_team_id")
         maintainer_team_id = config.require("maintainer_team_id")
         contributor_team_id = config.require("contributor_team_id")
 
