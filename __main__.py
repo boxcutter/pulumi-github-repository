@@ -47,7 +47,9 @@ GitHubRepository(
 GitHubRepository(
     "oci",
     GitHubRepositoryArgs(
-        description="Open container images",
+        description="Open container images 📦",
+        homepage_url="https://hub.docker.com/u/boxcutter",
+        topics=["neuroinformatics", "robotics", "docker", "podman", "container"],
     ),
 )
 GitHubRepository(
