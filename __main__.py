@@ -10,6 +10,12 @@ GitHubRepository(
     ),
 )
 GitHubRepository(
+    "boxcutter-chef-cookbooks",
+    GitHubRepositoryArgs(
+        description="Boxcutter Chef automation",
+    ),
+)
+GitHubRepository(
     "centos",
     GitHubRepositoryArgs(
         description="Virtual machine templates for CentOS written in legacy JSON",
