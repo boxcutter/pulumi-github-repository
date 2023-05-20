@@ -1,6 +1,5 @@
 import pulumi
 import pulumi_github
-import typing
 
 
 class GitHubBranchProtectionArgs:
