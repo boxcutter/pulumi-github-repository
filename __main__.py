@@ -1,5 +1,6 @@
 """Manage boxcutter org"""
 
+import pulumi_github
 from boxcutter.scm.github import GitHubRepository, GitHubRepositoryArgs
 
 GitHubRepository(
@@ -48,8 +49,10 @@ GitHubRepository(
     "oci",
     GitHubRepositoryArgs(
         description="Open container images 📦",
-        homepage_url="https://hub.docker.com/u/boxcutter",
-        topics=["neuroinformatics", "robotics", "docker", "podman", "container"],
+        override_repository_args=pulumi_github.RepositoryArgs(
+            homepage_url="https://hub.docker.com/u/boxcutter",
+            topics=["neuroinformatics", "robotics", "docker", "podman", "container"],
+        ),
     ),
 )
 GitHubRepository(
