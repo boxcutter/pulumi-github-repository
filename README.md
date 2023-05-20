@@ -17,7 +17,7 @@ Pulumi automation code that manages the repositories in this GitHub organization
 ## Adding a new team repo
 
 Add a new entry for the repository in `__main__.py` using the following format - __maintain alphabetical ordering__!
-```
+```python
 GitHubRepository(
     "<new_repo_name>",
     GitHubRepositoryArgs(
