@@ -22,6 +22,12 @@ GitHubRepository(
     ),
 )
 GitHubRepository(
+    "container-build-publish-action",
+    GitHubRepositoryArgs(
+        description="GitHub Action to build and publish container images with Buildx.
+    ),
+)
+GitHubRepository(
     "debian",
     GitHubRepositoryArgs(
         description="Virtual machine templates for Debian written in legacy JSON",
