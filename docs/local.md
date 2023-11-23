@@ -11,7 +11,7 @@ Usually performed by core team members to import repositories or manage state:
 op signin
 # op item get 'Pulumi (boxcutter@jpfm.dev)' --vault boxcutter
 # op item get utvu7uhmdoz33l4ap6uvjri3ei --format json
-export PULUMI_ACCESS_TOKEN=$(op read 'op://Boxcutter/utvu7uhmdoz33l4ap6uvjri3ei/credential')
+export PULUMI_ACCESS_TOKEN=$(op read 'op://Boxcutter/utvu7uhmdoz33l4ap6uvjri3ei/password')
 ```
 
 1. Use the pulumi-python container image to run pulumi commands:
