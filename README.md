@@ -1,5 +1,5 @@
 # pulumi-github-repository
-Pulumi automation code that manages the repositories in this GitHub organization
+Pulumi  automation code that manages the repositories in this GitHub organization
 
 # Workflow at a glance
 
