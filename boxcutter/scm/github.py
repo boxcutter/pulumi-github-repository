@@ -209,12 +209,16 @@ class GitHubRepository(pulumi.ComponentResource):
 
         pulumi_github.BranchProtection(
             f"{name}-github-branch-protection",
-            pattern="main"
-            if args.branch_protection_pattern is None
-            else args.branch_protection_pattern,
-            repository_id=name
-            if args.branch_protection_repository_id is None
-            else args.branch_protection_repository_id,
+            pattern=(
+                "main"
+                if args.branch_protection_pattern is None
+                else args.branch_protection_pattern
+            ),
+            repository_id=(
+                name
+                if args.branch_protection_repository_id is None
+                else args.branch_protection_repository_id
+            ),
             opts=pulumi.ResourceOptions(
                 protect=True,
                 depends_on=[self.github_repository],
