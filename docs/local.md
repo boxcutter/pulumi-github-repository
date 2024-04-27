@@ -10,9 +10,8 @@ Usually performed by core team members to import repositories or manage state:
 #   https://developer.1password.com/docs/cli/get-started
 op signin
 # op item get 'PULUMI_ACCESS_TOKEN (boxcutter) local workflow' --vault Infrastructure
-# op item get 'Pulumi (boxcutter@jpfm.dev)' --vault boxcutter
-# op item get utvu7uhmdoz33l4ap6uvjri3ei --format json
-export PULUMI_ACCESS_TOKEN=$(op read 'op://Boxcutter/utvu7uhmdoz33l4ap6uvjri3ei/password')
+# op item get maqd4zbl3crlsnnjwfbek5ic54 --vault Infrastructure --format json
+export PULUMI_ACCESS_TOKEN=$(op read 'op://Infrastructure/maqd4zbl3crlsnnjwfbek5ic54/credential')
 ```
 
 1. Use the pulumi-python container image to run pulumi commands:
