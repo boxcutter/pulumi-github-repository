@@ -1,0 +1,41 @@
+name: Manual pulumi up
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy::
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.9
+
+      - name: Run Black
+        uses: psf/black@stable
+        with:
+          src: "."
+
+      - name: Install flake8
+        run: pip install flake8
+
+      - uses: TrueBrain/actions-flake8@v2
+
+      - name: Install Pulumi
+        run: |
+            python3 -m venv venv
+            venv/bin/pip install -r requirements.txt
+
+      - name: Pulumi Up
+        uses: pulumi/actions@v5
+        with:
+            command: up
+            stack-name: org
+            work-dir: "."
+        env:
+            PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
