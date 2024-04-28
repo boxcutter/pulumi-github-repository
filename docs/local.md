@@ -2,7 +2,7 @@
 
 Usually performed by core team members to import repositories or manage state:
 
-1. Use `PULUMI_ACCESS_TOKEN` for `boxcutter`.
+1. Use `PULUMI_ACCESS_TOKEN` for local workflows.
 
 ```
 # Install the 1Password CLI and connect the 1Password app to the
@@ -27,4 +27,20 @@ $ docker container run -it --rm \
 % python3 -m pip install --upgrade pip
 % pulumi stack select org
 # <enter in pulumi commands here>
+```
+
+## Reformat code locally with black
+
+```bash
+docker container run -it --rm \
+    --mount type=bind,source="$(pwd)",target=/code \
+    docker.io/boxcutter/black .
+```
+
+## Reformat code locally with flake8
+
+```bash
+docker run --rm \
+    --mount type=bind,source="$(pwd)",target=/code \
+    docker.io/boxcutter/flake8 *.py
 ```

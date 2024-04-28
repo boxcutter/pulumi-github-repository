@@ -220,9 +220,11 @@ class GitHubRepository(pulumi.ComponentResource):
                 else args.branch_protection_repository_id
             ),
             opts=pulumi.ResourceOptions(
-                protect=True,
+                protect=False,
                 depends_on=[self.github_repository],
                 parent=self,
+                # To avoid "Name already protected" error when renaming repository
+                delete_before_replace=True,
             ),
         )
 
