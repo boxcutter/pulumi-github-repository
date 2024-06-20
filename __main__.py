@@ -46,6 +46,12 @@ GitHubRepository(
     ),
 )
 GitHubRepository(
+    "go2chef",
+    GitHubRepositoryArgs(
+        description="A Golang tool to bootstrap a system from zero so that it's able to run Chef to be managed ",
+    ),
+)
+GitHubRepository(
     "kvm",
     GitHubRepositoryArgs(
         description="Packer templates for producing KVM images written in HCL",
