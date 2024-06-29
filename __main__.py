@@ -86,6 +86,12 @@ GitHubRepository(
     ),
 )
 GitHubRepository(
+    "syscheck",
+    GitHubRepositoryArgs(
+        description="InSpec system validation scripts",
+    ),
+)
+GitHubRepository(
     "ubuntu",
     GitHubRepositoryArgs(
         description="Virtual machine templates for Ubuntu written in legacy JSON",
