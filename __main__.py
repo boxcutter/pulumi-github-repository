@@ -4,6 +4,12 @@ import pulumi_github
 from boxcutter.scm.github import GitHubRepository, GitHubRepositoryArgs
 
 GitHubRepository(
+    "bootstrap-chef",
+    GitHubRepositoryArgs(
+        description="JEOS images for bootstrapping Chef",
+    ),
+)
+GitHubRepository(
     "bsd",
     GitHubRepositoryArgs(
         description="Virtual machine templates for BSD flavours written in legacy JSON",
