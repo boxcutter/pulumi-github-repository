@@ -16,12 +16,12 @@ jobs:
     name: Update
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - name: Set up Python 3.9
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
-          python-version: 3.9
+          python-version: 3.11
 
       - name: Install Black
         run: pip install black
@@ -43,7 +43,7 @@ jobs:
 
       - name: Run pulumi preview
         if: github.event_name == 'pull_request'
-        uses: pulumi/actions@v4
+        uses: pulumi/actions@v6
         with:
           command: preview
           stack-name: org
@@ -54,7 +54,7 @@ jobs:
 
       - name: Run pulumi up
         if: github.event_name == 'push'
-        uses: pulumi/actions@v5
+        uses: pulumi/actions@v6
         with:
           command: up
           stack-name: org

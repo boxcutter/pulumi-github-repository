@@ -6,7 +6,7 @@ from boxcutter.scm.github import GitHubRepository, GitHubRepositoryArgs
 GitHubRepository(
     "bootstrap-chef",
     GitHubRepositoryArgs(
-        description="JEOS images for bootstrapping Chef",
+        description="JEOS images for bootstrapping Chef.",
     ),
 )
 GitHubRepository(

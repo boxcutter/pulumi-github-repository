@@ -21,7 +21,7 @@ $ docker container run -it --rm \
     --workdir /app \
     --mount type=bind,source="$(pwd)",target=/app \
     --entrypoint bash \
-    docker.io/boxcutter/pulumi-python
+    docker.io/boxcutter/pulumi-python-3.11
 % python3 -m venv venv  
 % venv/bin/pip install -r requirements.txt
 % python3 -m pip install --upgrade pip

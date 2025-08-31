@@ -5,4 +5,4 @@ config:
   boxcutter:maintainer_team_id: "6809382"
   github:owner: boxcutter
   github:token:
-    secure: AAABAMhaI0eX8tBxoYWv93sXA7dQnG2iBOi5NbhngKO0apSKLYmYHxBzyOO3Mpvbjq7JGfIUJE8o1SVRALWDI5X6TXwiba9Q
+    secure: AAABAHRFwco0smaj1VFlrpfSXir+wZbrZkjg86RGkdwZYvXILM40vUWxe8u8EdrflNUrYdETlwbiRLz8Iuj6wL4o5t5l62T7
