@@ -14,6 +14,7 @@ class GitHubBranchProtectionArgs:
         self.override_branch_protection_args = override_branch_protection_args
         self.import_ = import_
 
+
 class GitHubActionsSecretArgs:
     def __init__(
         self,
@@ -28,6 +29,7 @@ class GitHubActionsSecretArgs:
         self.pulumi_secret_config = pulumi_secret_config
         self.override_actions_secret_args = override_actions_secret_args
         self.import_ = import_
+
 
 class GitHubRepositoryArgs:
     def __init__(
@@ -56,7 +58,7 @@ class GitHubRepositoryArgs:
         self.maintainer_team_permission = maintainer_team_permission
         self.repository_import = repository_import
         self.override_repository_args = override_repository_args
-        self.actions_secrets = actions_secrets 
+        self.actions_secrets = actions_secrets
 
 
 class GitHubRepository(pulumi.ComponentResource):
