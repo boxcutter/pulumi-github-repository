@@ -1,7 +1,7 @@
 """Manage boxcutter org"""
 
 import pulumi_github
-from boxcutter.scm.github import GitHubRepository, GitHubRepositoryArgs
+from boxcutter.scm.github import GitHubRepository, GitHubRepositoryArgs, GitHubActionsSecretArgs
 
 GitHubRepository(
     "bootstrap-chef",
@@ -19,6 +19,12 @@ GitHubRepository(
     "boxcutter-chef-cookbooks",
     GitHubRepositoryArgs(
         description="Boxcutter Chef automation",
+        actions_secrets=[
+            GitHubActionsSecretArgs(
+                name="OP_SERVICE_ACCOUNT_TOKEN",
+                pulumi_secret_config="op:service_account_token",
+            ),
+        ]
     ),
 )
 GitHubRepository(

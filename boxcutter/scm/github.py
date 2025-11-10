@@ -1,5 +1,6 @@
 import pulumi
 import pulumi_github
+import typing
 
 
 class GitHubBranchProtectionArgs:
@@ -13,6 +14,20 @@ class GitHubBranchProtectionArgs:
         self.override_branch_protection_args = override_branch_protection_args
         self.import_ = import_
 
+class GitHubActionsSecretArgs:
+    def __init__(
+        self,
+        name: str,
+        value: str = None,
+        pulumi_secret_config: str = None,
+        override_actions_secret_args: pulumi_github.ActionsSecretArgs = None,
+        import_: str = None,
+    ):
+        self.name = name
+        self.value = value
+        self.pulumi_secret_config = pulumi_secret_config
+        self.override_actions_secret_args = override_actions_secret_args
+        self.import_ = import_
 
 class GitHubRepositoryArgs:
     def __init__(
@@ -28,6 +43,7 @@ class GitHubRepositoryArgs:
         branch_protection_import=None,
         branch_protection_pattern="main",
         branch_protection_repository_id=None,
+        actions_secrets: typing.Sequence[GitHubActionsSecretArgs] = None,
     ):
         self.description = description
         self.default_branch = default_branch
@@ -40,6 +56,7 @@ class GitHubRepositoryArgs:
         self.maintainer_team_permission = maintainer_team_permission
         self.repository_import = repository_import
         self.override_repository_args = override_repository_args
+        self.actions_secrets = actions_secrets 
 
 
 class GitHubRepository(pulumi.ComponentResource):
@@ -127,6 +144,33 @@ class GitHubRepository(pulumi.ComponentResource):
                     setattr(branch_protection_args, key, value)
 
         return branch_protection_args
+
+    def __check_actions_secret_args(
+        self,
+        args: GitHubActionsSecretArgs,
+        pulumi_github_repository_args: pulumi_github.RepositoryArgs,
+    ):
+        if args.pulumi_secret_config is not None:
+            values = args.pulumi_secret_config.split(":")
+            secret_config = values[0]
+            secret_require = values[1]
+
+            config = pulumi.Config(secret_config)
+            plaintext_value = config.require(secret_require)
+
+            actions_secret_args = pulumi_github.ActionsSecretArgs(
+                repository=pulumi_github_repository_args.name,
+                secret_name=args.name,
+                plaintext_value=plaintext_value,
+            )
+        else:
+            actions_secret_args = pulumi_github.ActionsSecretArgs(
+                repository=pulumi_github_repository_args.name,
+                secret_name=args.name,
+                plaintext_value=args.value,
+            )
+
+        return actions_secret_args
 
     def __init__(
         self, name, args: GitHubRepositoryArgs, opts: pulumi.ResourceOptions = None
@@ -227,5 +271,18 @@ class GitHubRepository(pulumi.ComponentResource):
                 delete_before_replace=True,
             ),
         )
+
+        if args.actions_secrets is not None:
+            for item in args.actions_secrets:
+                pulumi_github.ActionsSecret(
+                    resource_name=f"{name}-{item.name}-github-actions-secret",
+                    args=self.__check_actions_secret_args(item, repository_args),
+                    opts=pulumi.ResourceOptions(
+                        depends_on=[self.github_repository],
+                        delete_before_replace=True,
+                        parent=self,
+                        import_=item.import_,
+                    ),
+                )
 
         self.register_outputs({})
